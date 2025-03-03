@@ -8,7 +8,6 @@ import java.util.List;
 
 @Data
 public class HotelRequest {
-
     private String name;
     private List<ShortRoomResponse> rooms;
 }

@@ -2,6 +2,7 @@ package com.example.roomservice.mappers;
 
 import com.example.roomservice.dto.request.BookingRequest;
 import com.example.roomservice.dto.responce.BookingResponse;
+import com.example.roomservice.dto.responce.ShortBookingResponse;
 import com.example.roomservice.entity.Booking;
 import com.example.roomservice.entity.Client;
 import com.example.roomservice.entity.Room;
@@ -27,6 +28,16 @@ public class BookingMapper {
         );
     }
 
+    public ShortBookingResponse toShortDto(Booking booking){
+        return new ShortBookingResponse(
+                booking.getId(),
+                roomMapper.toDto(booking.getRoom()),
+                booking.getCheckInDate(),
+                booking.getCheckOutDate(),
+                booking.getIsConfirmed()
+        );
+    }
+
     public Booking toBooking(BookingRequest request, Room room, Client client){
         Booking booking = new Booking();
 
@@ -38,6 +49,7 @@ public class BookingMapper {
 
         return booking;
     }
+
 
 
 

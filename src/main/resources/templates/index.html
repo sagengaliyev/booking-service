@@ -10,38 +10,31 @@
 <body>
 
 <div class="container">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="index">Booking</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
-                    <a class="nav-link" href="/hotels">Hotels</a>
-                </div>
+
+    <div th:replace="fragments/menu.html :: menu"></div>
+
+    <div class="pt-3"></div>
+    <h2 class="text-center mb-4">Выберите даты бронирования</h2>
+
+    <form action="/bookings" method="get">
+        <div class="row g-3">
+
+            <div class="col-md-6">
+                <label for="checkin" class="form-label">Дата заезда</label>
+                <input type="date" class="form-control" id="checkin" name="checkin">
+            </div>
+
+            <div class="col-md-6">
+                <label for="checkout" class="form-label">Дата выезда</label>
+                <input type="date" class="form-control" id="checkout" name="checkout">
             </div>
         </div>
-    </nav>
 
-    <table class="table table-bordered mt-3">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Номер комнаты</th>
-            <th scope="col">Отель</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="room : ${rooms}">
-            <th scope="row" th:text="${room.getId()}"></th>
-            <td th:text="${room.getRoomNumber()}"></td>
-            <td th:text="${room.getHotel().getName()}"></td>
-        </tr>
-        </tbody>
-    </table>
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary px-4">Показать доступные номера</button>
+        </div>
+    </form>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
