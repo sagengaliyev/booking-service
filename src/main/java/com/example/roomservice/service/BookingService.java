@@ -1,7 +1,6 @@
 package com.example.roomservice.service;
 
 import com.example.roomservice.dto.request.BookingRequest;
-import com.example.roomservice.dto.responce.BookingResponse;
 import com.example.roomservice.dto.responce.ShortBookingResponse;
 import com.example.roomservice.entity.Client;
 import com.example.roomservice.entity.Room;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,12 +27,6 @@ public class BookingService {
 
     private final BookingMapper bookingMapper;
 
-    public List<BookingResponse> getAll() {
-        return bookingRepository.findAll().stream()
-                .map(bookingMapper::toDto)
-                .toList();
-    }
-
     public List<ShortBookingResponse> getSelectedBookings(String checkin, String checkout){
 
         if(checkin.isEmpty() || checkout.isEmpty()){
@@ -41,32 +35,27 @@ public class BookingService {
                     .toList();
         }
 
-        return bookingRepository.findBookingByCheckInDateAndCheckOutDate(LocalDate.parse(checkin), LocalDate.parse(checkout))
+        return bookingRepository.findBookingByCheckInDateAndCheckOutDate(LocalDate.parse(checkin),
+                        LocalDate.parse(checkout))
                 .stream()
                 .map(bookingMapper::toShortDto)
                 .toList();
     }
 
-
-    public BookingResponse create(BookingRequest request) {
+    public ShortBookingResponse create(BookingRequest request) {
 
         Long roomId = request.getRoom().getId();
-        Long clientId = request.getClient().getClientId();
 
         Room room = roomRepository.findById(roomId)
                 .orElseThrow(() -> new ResourceNotFoundException("Room with id " + roomId + " not found"));
 
-        Client client = clientRepository.findById(clientId)
-                .orElseThrow(() -> new ResourceNotFoundException("Client with id " + clientId + " not found"));
+        room.setIsBooked(true);
+        roomRepository.save(room);
 
-        if (request.getIsConfirmed()) {
-            room.setIsBooked(true);
-        }
-
-        Booking booking = bookingMapper.toBooking(request, room, client);
+        Booking booking = bookingMapper.toBooking(request, room);
         bookingRepository.save(booking);
 
-        return bookingMapper.toDto(booking);
+        return bookingMapper.toShortDto(booking);
     }
 
     public ShortBookingResponse findById(Long id) {
@@ -94,10 +83,14 @@ public class BookingService {
         bookingRepository.save(booking);
     }
 
-    public void delete(Long id) {
-        Booking booking = bookingRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Booking with id " + id + " not found"));
+    public void deleteByRoomId(Long roomId) {
+        Room room = roomRepository.findById(roomId)
+                .orElseThrow(() -> new ResourceNotFoundException("Room with id " + roomId + " not found"));
 
-        bookingRepository.delete(booking);
+        room.setIsBooked(false);
+        roomRepository.save(room);
+
+        Optional<Booking> booking = bookingRepository.findBookingByRoom(room);
+        booking.ifPresent(bookingRepository::delete);
     }
 }

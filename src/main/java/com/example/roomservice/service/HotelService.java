@@ -36,33 +36,6 @@ public class HotelService {
         return hotelMapper.toDto(hotel);
     }
 
-
-    public HotelResponse findById(Long id) {
-        return hotelRepository.findById(id)
-                .map(hotelMapper::toDto)
-                .orElseThrow(() -> new ResourceNotFoundException("Hotel with id " + id + " not found"));
-    }
-
-
-    public HotelResponse update(HotelRequest request, Long id) {
-        Hotel hotel = hotelRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Hotel with id " + id + " not found"));
-
-        hotel.setName(request.getName());
-
-        hotelRepository.save(hotel);
-
-        return hotelMapper.toDto(hotel);
-    }
-
-    public void delete(Long id) {
-        Hotel hotel = hotelRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Hotel with id " + id + " not found"));
-
-        hotelRepository.delete(hotel);
-    }
-
-
     public List<ShortRoomResponse> getAllRooms(Long hotelId) {
         Hotel hotel = hotelRepository.findById(hotelId)
                 .orElseThrow(() -> new ResourceNotFoundException("Hotel with id " + hotelId + " not found"));
@@ -71,4 +44,5 @@ public class HotelService {
 
         return response.getRooms();
     }
+
 }

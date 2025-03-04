@@ -27,7 +27,4 @@ public class HotelController {
         return "hotel-rooms";
     }
 
-
-
-
 }

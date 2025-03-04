@@ -1,27 +1,24 @@
 package com.example.roomservice.controller;
 
+import com.example.roomservice.dto.request.BookingRequest;
 import com.example.roomservice.dto.responce.ClientResponse;
 import com.example.roomservice.dto.responce.ShortBookingResponse;
 import com.example.roomservice.service.BookingService;
 import com.example.roomservice.service.ClientService;
+import com.example.roomservice.service.RoomService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/bookings")
 public class BookingController {
 
     private final BookingService bookingService;
     private final ClientService clientService;
-
-    public BookingController(BookingService bookingService, ClientService clientService) {
-        this.bookingService = bookingService;
-        this.clientService = clientService;
-    }
+    private final RoomService roomService;
 
     @GetMapping
     public String showBooking(Model model,
@@ -53,6 +50,26 @@ public class BookingController {
                                @RequestParam(name = "clientId") Long clientId) {
         bookingService.update(bookingId, clientId);
         return "index";
+    }
+
+    @GetMapping("/create")
+    public String showCreateBookingPage(@RequestParam Long roomId, Model model){
+        model.addAttribute("bookingRequest", new BookingRequest());
+        model.addAttribute("room", roomService.findById(roomId));
+        return "booking-create";
+    }
+
+    @PostMapping("/create")
+    public String createBooking(@ModelAttribute BookingRequest bookingRequest){
+        bookingService.create(bookingRequest);
+        return "redirect:/hotels";
+    }
+
+
+    @PostMapping("/delete/{roomId}")
+    public String delete(@PathVariable Long roomId){
+        bookingService.deleteByRoomId(roomId);
+        return "redirect:/hotels";
     }
 
 

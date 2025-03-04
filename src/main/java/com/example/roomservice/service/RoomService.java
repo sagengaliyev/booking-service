@@ -11,8 +11,6 @@ import com.example.roomservice.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class RoomService {
@@ -20,19 +18,6 @@ public class RoomService {
     private final RoomRepository roomRepository;
     private final HotelRepository hotelRepository;
     private final RoomMapper roomMapper;
-
-    public List<RoomResponse> getAllRooms() {
-        return roomRepository.findAll()
-                .stream()
-                .map(roomMapper::toDto)
-                .toList();
-    }
-
-    public RoomResponse findById(Long id){
-        return roomRepository.findById(id)
-                .map(roomMapper::toDto)
-                .orElseThrow(() -> new ResourceNotFoundException("Room with id " + id + " not found"));
-    }
 
 
     public RoomResponse create(RoomRequest roomDtoRequest) {
@@ -47,30 +32,11 @@ public class RoomService {
         return roomMapper.toDto(room);
     }
 
-    public RoomResponse update(RoomRequest roomDtoRequest, Long id) {
-        Long hotelId = roomDtoRequest.getHotel().getId();
-
-        Room room = roomRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Room with id " + id + " not found"));
-
-        if(!room.getHotel().getId().equals(hotelId)){
-            Hotel hotel = hotelRepository.findById(hotelId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Hotel with id " + hotelId + " not found"));
-            room.setHotel(hotel);
-        }
-
-        room.setRoomNumber(roomDtoRequest.getRoomNumber());
-        room.setIsBooked(roomDtoRequest.getIsBooked());
-
-        roomRepository.save(room);
-
-        return roomMapper.toDto(room);
+    public RoomResponse findById(Long id){
+        return roomRepository.findById(id)
+                .map(roomMapper::toDto)
+                .orElseThrow(() -> new ResourceNotFoundException("Client with id " + id + " not found"));
     }
 
-    public void delete(Long id) {
-        Room room = roomRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Room with id " + id + " not found"));
 
-        roomRepository.delete(room);
-    }
 }

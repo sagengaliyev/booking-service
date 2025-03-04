@@ -8,7 +8,6 @@ import com.example.roomservice.entity.Hotel;
 import com.example.roomservice.entity.Room;
 import org.springframework.stereotype.Component;
 
-
 @Component
 public class RoomMapper {
 

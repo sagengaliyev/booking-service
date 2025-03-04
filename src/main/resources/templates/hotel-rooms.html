@@ -17,6 +17,7 @@
             <th scope="col">#</th>
             <th scope="col">Номер комнаты</th>
             <th scope="col">Статус</th>
+            <th scope="col">Действие</th>
         </tr>
         </thead>
         <tbody>
@@ -24,6 +25,16 @@
             <th scope="row" th:text="${iter.count}"></th>
             <td th:text="${room.getRoomNumber()}"></td>
             <td th:text="${room.getIsBooked() ? 'Забронирован' : 'Свободен'}"></td>
+            <td>
+                <form th:if="${room.getIsBooked()}" th:action="@{/bookings/delete/{id}(id=${room.getId()})}" method="post">
+                    <button type="submit" class="btn btn-outline-danger">Отменить бронь</button>
+                </form>
+
+                <form th:unless="${room.getIsBooked()}" th:action="@{/bookings/create}" method="get">
+                    <input type = "hidden" name="roomId" th:value="${room.getId()}">
+                    <button type="submit" class="btn btn-outline-primary">Добавить бронь</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>

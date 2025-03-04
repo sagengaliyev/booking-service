@@ -22,11 +22,12 @@
             <th scope="col">Отель</th>
             <th scope="col">Дата заезда</th>
             <th scope="col">Дата выезда</th>
+            <th scope="col">Действие</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="booking, iter: ${bookings}" th:if="${booking.getIsConfirmed() == false}">
-            <th scope="row" th:text="${iter.count}"></th>
+            <th scope="row" th:text="${iter.index + 1}"></th>
             <td th:text="${booking.getRoom().getRoomNumber()}"></td>
             <td th:text="${booking.getRoom().getHotel().getName()}"></td>
             <td th:text="${checkin ?: booking.getCheckInDate()}"></td>
