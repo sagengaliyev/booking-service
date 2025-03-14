@@ -1,15 +1,14 @@
-package com.example.roomservice.dto.responce;
+package com.example.roomservice.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
 @AllArgsConstructor
-public class RoomResponse {
-    private Long id;
-    private ShortHotelResponse hotel;
+@RequiredArgsConstructor
+public class ShortRoomRequest {
+    private Long roomId;
     private String roomType;
     private Double price;
     private Boolean isBooked;

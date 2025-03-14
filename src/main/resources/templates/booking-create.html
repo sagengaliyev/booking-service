@@ -19,9 +19,15 @@
     <form th:action="@{/bookings/create}" th:object="${bookingRequest}" method="post" class="mt-4">
 
       <div class="mb-3">
-        <label class="form-label">Номер комнаты</label>
-        <input type="text" class="form-control" th:value="${room.getRoomNumber()}" disabled>
-        <input type="hidden" name="room.id" th:value="${room.getId()}">
+        <label class="form-label">Тип комнаты</label>
+        <input type="text" class="form-control" th:value="${room.get().getRoomType()}" disabled>
+        <input type="hidden" name="room.id" th:value="${room.get().getId()}">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Цена</label>
+        <input type="text" class="form-control" th:value="${room.get().getPrice()}" disabled>
+        <input type="hidden" name="room.id" th:value="${room.get().getId()}">
       </div>
 
       <div class="mb-3">

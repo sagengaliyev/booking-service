@@ -23,7 +23,8 @@
 
             <h4 class="mb-3">Данные бронирования</h4>
             <p><strong>Отель:</strong> <span th:text="${booking.getRoom().getHotel().getName()}"></span></p>
-            <p><strong>Номер комнаты:</strong> <span th:text="${booking.getRoom().getRoomNumber()}"></span></p>
+            <p><strong>Тип комнаты:</strong> <span th:text="${booking.getRoom().getRoomType()}"></span></p>
+            <p><strong>Цена:</strong> <span th:text="${booking.getRoom().getPrice()}"></span></p>
             <p><strong>Дата заезда:</strong> <span th:text="${booking.getCheckInDate()}"></span></p>
             <p><strong>Дата отъезда:</strong> <span th:text="${booking.getCheckOutDate()}"></span></p>
 

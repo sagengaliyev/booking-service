@@ -18,7 +18,8 @@
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Номер комнаты</th>
+            <th scope="col">Тип комнаты</th>
+            <th scope="col">Цена</th>
             <th scope="col">Отель</th>
             <th scope="col">Дата заезда</th>
             <th scope="col">Дата выезда</th>
@@ -28,7 +29,8 @@
         <tbody>
         <tr th:each="booking, iter: ${bookings}" th:if="${booking.getIsConfirmed() == false}">
             <th scope="row" th:text="${iter.index + 1}"></th>
-            <td th:text="${booking.getRoom().getRoomNumber()}"></td>
+            <td th:text="${booking.getRoom().getRoomType()}"></td>
+            <td th:text="${booking.getRoom().getPrice()}"></td>
             <td th:text="${booking.getRoom().getHotel().getName()}"></td>
             <td th:text="${checkin ?: booking.getCheckInDate()}"></td>
             <td th:text="${checkout ?: booking.getCheckOutDate()}"></td>

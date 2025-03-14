@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 public class RoomRequest {
     private ShortHotelResponse hotel;
-    private String roomNumber;
+    private String roomType;
+    private Double price;
     private Boolean isBooked;
 }

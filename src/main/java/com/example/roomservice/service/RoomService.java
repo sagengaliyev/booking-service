@@ -1,6 +1,6 @@
 package com.example.roomservice.service;
 
-import com.example.roomservice.dto.request.RoomRequest;
+import com.example.roomservice.dto.request.SoapRoomRequest;
 import com.example.roomservice.dto.responce.RoomResponse;
 import com.example.roomservice.entity.Hotel;
 import com.example.roomservice.exception.ResourceNotFoundException;
@@ -11,6 +11,8 @@ import com.example.roomservice.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class RoomService {
@@ -20,7 +22,7 @@ public class RoomService {
     private final RoomMapper roomMapper;
 
 
-    public RoomResponse create(RoomRequest roomDtoRequest) {
+    public RoomResponse create(SoapRoomRequest roomDtoRequest) {
         Long hotelId = roomDtoRequest.getHotel().getId();
         Hotel hotel = hotelRepository.findById(hotelId)
                 .orElseThrow(() -> new ResourceNotFoundException("Hotel with id " + hotelId + " not found"));
@@ -32,10 +34,17 @@ public class RoomService {
         return roomMapper.toDto(room);
     }
 
-    public RoomResponse findById(Long id){
+    public Optional<RoomResponse> findById(Long id){
         return roomRepository.findById(id)
-                .map(roomMapper::toDto)
-                .orElseThrow(() -> new ResourceNotFoundException("Client with id " + id + " not found"));
+                .map(roomMapper::toDto);
+    }
+
+    public void updatePriceRoom(Double price, Long roomId){
+
+        Room room = roomRepository.findById(roomId)
+                .orElseThrow(() -> new ResourceNotFoundException("Room with id " + roomId + " not found"));
+        room.setPrice(price);
+        roomRepository.save(room);
     }
 
 

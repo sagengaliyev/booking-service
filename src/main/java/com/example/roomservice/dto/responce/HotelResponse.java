@@ -1,5 +1,6 @@
 package com.example.roomservice.dto.responce;
 
+import com.example.roomservice.dto.request.SoapRoomRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -13,5 +14,5 @@ import java.util.List;
 public class HotelResponse {
     private Long id;
     private String name;
-    private List<ShortRoomResponse> rooms;
+    private List<SoapRoomRequest> rooms;
 }

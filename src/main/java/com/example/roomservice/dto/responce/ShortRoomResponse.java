@@ -8,7 +8,9 @@ import lombok.Data;
 @AllArgsConstructor
 
 public class ShortRoomResponse {
-    private Long id;
-    private String roomNumber;
+
+    private Long roomId;
+    private String roomType;
+    private Double price;
     private Boolean isBooked;
 }

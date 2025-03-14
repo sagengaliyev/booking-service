@@ -1,8 +1,9 @@
 package com.example.roomservice.mappers;
 
-import com.example.roomservice.dto.request.HotelRequest;
+import com.example.roomservice.dto.request.SoapHotelRequest;
+import com.example.roomservice.dto.request.SoapRoomRequest;
 import com.example.roomservice.dto.responce.HotelResponse;
-import com.example.roomservice.dto.responce.ShortRoomResponse;
+import com.example.roomservice.dto.responce.ShortHotelResponse;
 import com.example.roomservice.entity.Hotel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -16,11 +17,13 @@ public class HotelMapper {
     private final RoomMapper roomMapper;
 
     public HotelResponse toDto(Hotel hotel){
-        List<ShortRoomResponse> roomsDto = hotel.getRooms()
+        List<SoapRoomRequest> roomsDto = hotel.getRooms()
                 .stream()
-                .map(r -> new ShortRoomResponse(
+                .map(r -> new SoapRoomRequest(
+                        new ShortHotelResponse(hotel.getId(), hotel.getName()),
                         r.getId(),
-                        r.getRoomNumber(),
+                        r.getType(),
+                        r.getPrice(),
                         r.getIsBooked()))
                 .toList();
 
@@ -32,17 +35,20 @@ public class HotelMapper {
     }
 
 
-    public Hotel toHotel(HotelRequest dto){
+    public Hotel toHotel(SoapHotelRequest dto){
         Hotel hotel = new Hotel();
+
         hotel.setName(dto.getName());
         hotel.setRooms(dto.getRooms().stream()
-                .map(roomMapper::toRoom)
+                .map(soapRoomRequest -> roomMapper.toRoom(soapRoomRequest, hotel))
                 .toList()
         );
 
         return hotel;
 
     }
+
+
 
 
 

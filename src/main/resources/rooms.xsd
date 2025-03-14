@@ -1,0 +1,22 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://soap.roomservice.example.com"
+           targetNamespace="http://soap.roomservice.example.com" elementFormDefault="qualified">
+
+    <xs:element name="getBookedRoomsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="hotelId" type="xs:long"/>
+                <xs:element name="roomType" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getBookedRoomsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="countBookedRooms" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+</xs:schema>

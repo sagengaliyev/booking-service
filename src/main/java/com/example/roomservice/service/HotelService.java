@@ -1,15 +1,17 @@
 package com.example.roomservice.service;
 
-import com.example.roomservice.dto.request.HotelRequest;
+import com.example.roomservice.dto.request.SoapHotelRequest;
+import com.example.roomservice.dto.request.SoapRoomRequest;
 import com.example.roomservice.dto.responce.HotelResponse;
-import com.example.roomservice.dto.responce.ShortRoomResponse;
 import com.example.roomservice.entity.Hotel;
 import com.example.roomservice.exception.ResourceNotFoundException;
 import com.example.roomservice.mappers.HotelMapper;
 import com.example.roomservice.repository.HotelRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class HotelService {
@@ -28,15 +30,20 @@ public class HotelService {
                 .toList();
     }
 
+    @Transactional
+    public HotelResponse create(SoapHotelRequest hotelDtoRequest) {
 
-    public HotelResponse create(HotelRequest hotelDtoRequest) {
+        if(hotelDtoRequest.getId() == null){
+            throw new IllegalArgumentException("Id must be manually assigned before saving");
+        }
+
         Hotel hotel = hotelMapper.toHotel(hotelDtoRequest);
         hotelRepository.save(hotel);
 
         return hotelMapper.toDto(hotel);
     }
 
-    public List<ShortRoomResponse> getAllRooms(Long hotelId) {
+    public List<SoapRoomRequest> getAllRooms(Long hotelId) {
         Hotel hotel = hotelRepository.findById(hotelId)
                 .orElseThrow(() -> new ResourceNotFoundException("Hotel with id " + hotelId + " not found"));
 
@@ -44,5 +51,20 @@ public class HotelService {
 
         return response.getRooms();
     }
+
+    public Integer getCountBookedRooms(Long hotelId, String roomType){
+        Hotel hotel = hotelRepository.findById(hotelId)
+                .orElseThrow(() -> new ResourceNotFoundException("Hotel with id " + hotelId + " not found"));
+
+        return hotel.getRooms().stream()
+                .filter(room -> room.getIsBooked() && room.getType().equalsIgnoreCase(roomType))
+                .toList().size();
+    }
+
+
+    public Optional<Hotel> findById(Long hotelId){
+        return hotelRepository.findById(hotelId);
+    }
+
 
 }

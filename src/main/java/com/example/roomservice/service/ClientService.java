@@ -30,23 +30,4 @@ public class ClientService {
                 .orElseThrow(() -> new ResourceNotFoundException("Client with id " + id + " not found"));
     }
 
-//    public ClientResponse update(ClientRequest request, Long id){
-//
-//        Client client = clientRepository.findById(id)
-//                .orElseThrow(() -> new ResourceNotFoundException("Client with id " + id + " not found"));
-//
-//        client.setName(request.getName());
-//        client.setEmail(request.getEmail());
-//
-//        clientRepository.save(client);
-//
-//        return clientMapper.toDto(client);
-//    }
-//
-//    public void delete(Long id){
-//        Client client = clientRepository.findById(id)
-//                .orElseThrow(() -> new ResourceNotFoundException("Client with id " + id + " not found"));
-//
-//        clientRepository.delete(client);
-//    }
 }
