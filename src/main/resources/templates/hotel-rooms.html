@@ -28,11 +28,11 @@
             <td th:text="${room.getPrice()}"></td>
             <td th:text="${room.getIsBooked() ? 'Забронирован' : 'Свободен'}"></td>
             <td>
-                <form th:if="${room.getIsBooked()}" th:action="@{/bookings/delete/{id}(id=${room.getRoomId()})}" method="post">
+                <form th:if="${room.getIsBooked()}" th:action="@{/bookings/delete/{id}(id=${room.getRoomId()})}" th:method="delete">
                     <button type="submit" class="btn btn-outline-danger">Отменить бронь</button>
                 </form>
 
-                <form th:unless="${room.getIsBooked()}" th:action="@{/bookings/create}" method="get">
+                <form th:unless="${room.getIsBooked()}" th:action="@{/bookings/booking-page}" method="get">
                     <input type = "hidden" name="roomId" th:value="${room.getRoomId()}">
                     <button type="submit" class="btn btn-outline-primary">Добавить бронь</button>
                 </form>

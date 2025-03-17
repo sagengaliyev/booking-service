@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: room-service
+  jpa:
+    hibernate:
+      ddl-auto: none
+  liquibase:
+    change-log: classpath:/db/changelog/create-tables-changelog.sql
+  datasource:
+    url: jdbc:h2:file:./db
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  h2:
+    console:
+      enabled: true
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+

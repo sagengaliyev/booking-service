@@ -1,9 +1,9 @@
 package com.example.roomservice.mappers;
 
 import com.example.roomservice.dto.request.SoapHotelRequest;
-import com.example.roomservice.dto.request.SoapRoomRequest;
-import com.example.roomservice.dto.responce.HotelResponse;
-import com.example.roomservice.dto.responce.ShortHotelResponse;
+import com.example.roomservice.dto.response.HotelResponse;
+import com.example.roomservice.dto.response.ShortHotelResponse;
+import com.example.roomservice.dto.response.SoapRoomResponse;
 import com.example.roomservice.entity.Hotel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -17,11 +17,11 @@ public class HotelMapper {
     private final RoomMapper roomMapper;
 
     public HotelResponse toDto(Hotel hotel){
-        List<SoapRoomRequest> roomsDto = hotel.getRooms()
+        List<SoapRoomResponse> roomsDto = hotel.getRooms()
                 .stream()
-                .map(r -> new SoapRoomRequest(
-                        new ShortHotelResponse(hotel.getId(), hotel.getName()),
+                .map(r -> new SoapRoomResponse(
                         r.getId(),
+                        new ShortHotelResponse(hotel.getId(), hotel.getName()),
                         r.getType(),
                         r.getPrice(),
                         r.getIsBooked()))

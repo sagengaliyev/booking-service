@@ -1,8 +1,8 @@
 package com.example.roomservice.controller;
 
 import com.example.roomservice.dto.request.BookingRequest;
-import com.example.roomservice.dto.responce.ClientResponse;
-import com.example.roomservice.dto.responce.ShortBookingResponse;
+import com.example.roomservice.dto.response.ClientResponse;
+import com.example.roomservice.dto.response.BookingResponse;
 import com.example.roomservice.service.BookingService;
 import com.example.roomservice.service.ClientService;
 import com.example.roomservice.service.RoomService;
@@ -36,7 +36,7 @@ public class BookingController {
                                           @RequestParam(name = "bookingId") Long bookingId,
                                           @RequestParam(name = "clientId") Long clientId) {
 
-        ShortBookingResponse booking = bookingService.findById(bookingId);
+        BookingResponse booking = bookingService.findById(bookingId);
         ClientResponse client = clientService.findById(clientId);
 
         model.addAttribute("booking", booking);
@@ -45,14 +45,14 @@ public class BookingController {
     }
 
 
-    @PostMapping("/confirm")
-    public String updateClient(@RequestParam(name = "bookingId") Long bookingId,
+    @PutMapping("/confirm")
+    public String addClient(@RequestParam(name = "bookingId") Long bookingId,
                                @RequestParam(name = "clientId") Long clientId) {
         bookingService.update(bookingId, clientId);
         return "index";
     }
 
-    @GetMapping("/create")
+    @GetMapping("/booking-page")
     public String showCreateBookingPage(@RequestParam Long roomId, Model model){
         model.addAttribute("bookingRequest", new BookingRequest());
         model.addAttribute("room", roomService.findById(roomId));
@@ -65,8 +65,7 @@ public class BookingController {
         return "redirect:/hotels";
     }
 
-
-    @PostMapping("/delete/{roomId}")
+    @DeleteMapping("/delete/{roomId}")
     public String delete(@PathVariable Long roomId){
         bookingService.deleteByRoomId(roomId);
         return "redirect:/hotels";

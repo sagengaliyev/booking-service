@@ -1,7 +1,7 @@
 package com.example.roomservice.mappers;
 
 import com.example.roomservice.dto.request.ClientRequest;
-import com.example.roomservice.dto.responce.ClientResponse;
+import com.example.roomservice.dto.response.ClientResponse;
 import com.example.roomservice.entity.Client;
 import org.springframework.stereotype.Component;
 

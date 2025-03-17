@@ -1,7 +1,7 @@
 package com.example.roomservice.service;
 
 import com.example.roomservice.dto.request.BookingRequest;
-import com.example.roomservice.dto.responce.ShortBookingResponse;
+import com.example.roomservice.dto.response.BookingResponse;
 import com.example.roomservice.entity.Client;
 import com.example.roomservice.entity.Room;
 import com.example.roomservice.exception.ResourceNotFoundException;
@@ -27,7 +27,7 @@ public class BookingService {
 
     private final BookingMapper bookingMapper;
 
-    public List<ShortBookingResponse> getSelectedBookings(String checkin, String checkout){
+    public List<BookingResponse> getSelectedBookings(String checkin, String checkout){
 
         if(checkin.isEmpty() || checkout.isEmpty()){
             return bookingRepository.findAll().stream()
@@ -42,9 +42,9 @@ public class BookingService {
                 .toList();
     }
 
-    public ShortBookingResponse create(BookingRequest request) {
+    public BookingResponse create(BookingRequest request) {
 
-        Long roomId = request.getRoom().getId();
+        Long roomId = request.getRoom().getRoomId();
 
         Room room = roomRepository.findById(roomId)
                 .orElseThrow(() -> new ResourceNotFoundException("Room with id " + roomId + " not found"));
@@ -58,7 +58,7 @@ public class BookingService {
         return bookingMapper.toShortDto(booking);
     }
 
-    public ShortBookingResponse findById(Long id) {
+    public BookingResponse findById(Long id) {
         return bookingRepository.findById(id)
                 .map(bookingMapper::toShortDto)
                 .orElseThrow(() -> new ResourceNotFoundException("Booking with id " + id + " not found"));

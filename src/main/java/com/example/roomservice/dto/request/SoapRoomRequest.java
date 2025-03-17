@@ -1,6 +1,5 @@
 package com.example.roomservice.dto.request;
 
-import com.example.roomservice.dto.responce.ShortHotelResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -9,8 +8,8 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class SoapRoomRequest {
-    private ShortHotelResponse hotel;
     private Long roomId;
+    private ShortHotelRequest hotel;
     private String roomType;
     private Double price;
     private Boolean isBooked;

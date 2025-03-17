@@ -21,13 +21,13 @@
       <div class="mb-3">
         <label class="form-label">Тип комнаты</label>
         <input type="text" class="form-control" th:value="${room.get().getRoomType()}" disabled>
-        <input type="hidden" name="room.id" th:value="${room.get().getId()}">
+        <input type="hidden" name="room.roomId" th:value="${room.get().getRoomId()}">
       </div>
 
       <div class="mb-3">
         <label class="form-label">Цена</label>
         <input type="text" class="form-control" th:value="${room.get().getPrice()}" disabled>
-        <input type="hidden" name="room.id" th:value="${room.get().getId()}">
+        <input type="hidden" name="room.roomId" th:value="${room.get().getRoomId()}">
       </div>
 
       <div class="mb-3">

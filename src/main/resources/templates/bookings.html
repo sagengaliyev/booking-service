@@ -35,7 +35,7 @@
             <td th:text="${checkin ?: booking.getCheckInDate()}"></td>
             <td th:text="${checkout ?: booking.getCheckOutDate()}"></td>
             <td>
-                <form action="/client/create" method="get">
+                <form action="/client" method="get">
                     <input type="hidden" name="bookingId" th:value="${booking.getIdBooking()}">
                     <button type="submit" class="btn btn-primary">Перейти к бронированию</button>
                 </form>

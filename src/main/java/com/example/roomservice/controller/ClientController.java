@@ -1,7 +1,7 @@
 package com.example.roomservice.controller;
 
 import com.example.roomservice.dto.request.ClientRequest;
-import com.example.roomservice.dto.responce.ClientResponse;
+import com.example.roomservice.dto.response.ClientResponse;
 import com.example.roomservice.service.ClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,7 @@ public class ClientController {
 
     private final ClientService clientService;
 
-    @GetMapping("/create")
+    @GetMapping
     public String showClientForm(@RequestParam(name = "bookingId") Long bookingId,
                                  Model model){
         model.addAttribute("bookingId", bookingId);

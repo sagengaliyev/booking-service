@@ -1,7 +1,7 @@
 package com.example.roomservice.mappers;
 
 import com.example.roomservice.dto.request.BookingRequest;
-import com.example.roomservice.dto.responce.ShortBookingResponse;
+import com.example.roomservice.dto.response.BookingResponse;
 import com.example.roomservice.entity.Booking;
 import com.example.roomservice.entity.Room;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +14,8 @@ public class BookingMapper {
 
     private final RoomMapper roomMapper;
 
-    public ShortBookingResponse toShortDto(Booking booking){
-        return new ShortBookingResponse(
+    public BookingResponse toShortDto(Booking booking){
+        return new BookingResponse(
                 booking.getId(),
                 roomMapper.toDto(booking.getRoom()),
                 booking.getCheckInDate(),

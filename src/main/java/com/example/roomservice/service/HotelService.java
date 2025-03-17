@@ -1,8 +1,8 @@
 package com.example.roomservice.service;
 
 import com.example.roomservice.dto.request.SoapHotelRequest;
-import com.example.roomservice.dto.request.SoapRoomRequest;
-import com.example.roomservice.dto.responce.HotelResponse;
+import com.example.roomservice.dto.response.HotelResponse;
+import com.example.roomservice.dto.response.SoapRoomResponse;
 import com.example.roomservice.entity.Hotel;
 import com.example.roomservice.exception.ResourceNotFoundException;
 import com.example.roomservice.mappers.HotelMapper;
@@ -43,7 +43,7 @@ public class HotelService {
         return hotelMapper.toDto(hotel);
     }
 
-    public List<SoapRoomRequest> getAllRooms(Long hotelId) {
+    public List<SoapRoomResponse> getAllRooms(Long hotelId) {
         Hotel hotel = hotelRepository.findById(hotelId)
                 .orElseThrow(() -> new ResourceNotFoundException("Hotel with id " + hotelId + " not found"));
 

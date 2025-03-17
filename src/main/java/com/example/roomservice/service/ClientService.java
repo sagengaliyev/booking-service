@@ -1,7 +1,7 @@
 package com.example.roomservice.service;
 
 import com.example.roomservice.dto.request.ClientRequest;
-import com.example.roomservice.dto.responce.ClientResponse;
+import com.example.roomservice.dto.response.ClientResponse;
 import com.example.roomservice.exception.ResourceNotFoundException;
 import com.example.roomservice.mappers.ClientMapper;
 import com.example.roomservice.entity.Client;

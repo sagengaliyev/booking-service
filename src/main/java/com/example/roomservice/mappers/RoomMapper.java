@@ -1,8 +1,8 @@
 package com.example.roomservice.mappers;
 
 import com.example.roomservice.dto.request.SoapRoomRequest;
-import com.example.roomservice.dto.responce.ShortHotelResponse;
-import com.example.roomservice.dto.responce.RoomResponse;
+import com.example.roomservice.dto.response.ShortHotelResponse;
+import com.example.roomservice.dto.response.SoapRoomResponse;
 import com.example.roomservice.entity.Hotel;
 import com.example.roomservice.entity.Room;
 import org.springframework.stereotype.Component;
@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class RoomMapper {
 
-    public RoomResponse toDto(Room room){
-        return new RoomResponse(
+    public SoapRoomResponse toDto(Room room){
+        return new SoapRoomResponse(
                 room.getId(),
                 new ShortHotelResponse(
                         room.getHotel().getId(),

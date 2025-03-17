@@ -1,16 +1,16 @@
 package com.example.roomservice.soap;
 
+import com.example.roomservice.dto.request.ShortHotelRequest;
 import com.example.roomservice.dto.request.SoapHotelRequest;
 import com.example.roomservice.dto.request.SoapRoomRequest;
-import com.example.roomservice.dto.responce.*;
+import com.example.roomservice.dto.response.SoapRoomResponse;
 import com.example.roomservice.entity.Hotel;
 import com.example.roomservice.service.HotelService;
 import com.example.roomservice.service.RoomService;
-import com.example.roomservice.soap.client.HotelClient;
 import com.example.roomservice.soap.client.GetAllRoomPricesResponse;
-import com.example.roomservice.soap.client.HotelRoomPriceDTO;
+import com.example.roomservice.soap.client.HotelClient;
+import com.example.roomservice.soap.client.HotelRoomPrice;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -27,7 +27,6 @@ public class HotelScheduler {
     private final RoomService roomService;
 
 
-    @Autowired
     public HotelScheduler(HotelClient hotelClient, HotelService hotelService, RoomService roomService) {
         this.hotelClient = hotelClient;
         this.hotelService = hotelService;
@@ -43,11 +42,9 @@ public class HotelScheduler {
 
         createClientHotels(hotels, hotelService);
         createClientRooms(hotels, roomService);
-
-
     }
 
-    public static List<SoapHotelRequest> getClientHotels(List<HotelRoomPriceDTO> dataHotels) {
+    public static List<SoapHotelRequest> getClientHotels(List<HotelRoomPrice> dataHotels) {
 
         Long hotelId = dataHotels.getFirst().getHotelId();
         List<SoapRoomRequest> rooms = new ArrayList<>();
@@ -58,9 +55,9 @@ public class HotelScheduler {
         hotelRequest.setId(dataHotels.getFirst().getHotelId());
         hotelRequest.setName(dataHotels.getFirst().getHotelName());
 
-        for (HotelRoomPriceDTO hotel : dataHotels) {
+        for (HotelRoomPrice hotel : dataHotels) {
             Long newHotelId = hotel.getHotelId();
-            Integer totalRoomCount = hotel.getTotalRoomsAmount();
+            int totalRoomCount = hotel.getTotalRoomsAmount();
             SoapRoomRequest room;
 
             if (!newHotelId.equals(hotelId)) {
@@ -75,8 +72,8 @@ public class HotelScheduler {
 
             for (int i = 0; i < totalRoomCount; i++) {
                 room = new SoapRoomRequest(
-                        new ShortHotelResponse(hotel.getHotelId(), hotel.getHotelName()),
                         roomId,
+                        new ShortHotelRequest(hotel.getHotelId(), hotel.getHotelName()),
                         hotel.getRoomType(),
                         hotel.getPrice(),
                         false
@@ -110,7 +107,7 @@ public class HotelScheduler {
 
     public static void createClientRooms(List<SoapHotelRequest> hotelRequests, RoomService roomService) {
 
-        ShortHotelResponse shortHotel = new ShortHotelResponse();
+        ShortHotelRequest shortHotel = new ShortHotelRequest();
 
         Long hotelId = hotelRequests.getFirst().getId();
 
@@ -121,7 +118,7 @@ public class HotelScheduler {
             Long requestHotelId = hotel.getId();
 
             if (!hotelId.equals(requestHotelId)) {
-                shortHotel = new ShortHotelResponse();
+                shortHotel = new ShortHotelRequest();
                 shortHotel.setId(hotel.getId());
                 shortHotel.setName(hotel.getName());
             }
@@ -129,7 +126,7 @@ public class HotelScheduler {
             for (SoapRoomRequest room : hotel.getRooms()) {
                 SoapRoomRequest roomRequest = new SoapRoomRequest();
 
-                Optional<RoomResponse> newRoom = roomService.findById(room.getRoomId());
+                Optional<SoapRoomResponse> newRoom = roomService.findById(room.getRoomId());
 
                 if (newRoom.isEmpty()) {
                     roomRequest.setRoomId(room.getRoomId());

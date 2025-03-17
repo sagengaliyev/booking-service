@@ -28,7 +28,7 @@
             <p><strong>Дата заезда:</strong> <span th:text="${booking.getCheckInDate()}"></span></p>
             <p><strong>Дата отъезда:</strong> <span th:text="${booking.getCheckOutDate()}"></span></p>
 
-            <form action="/bookings/confirm" method="post">
+            <form action="/bookings/confirm" th:method="put">
                 <input type="hidden" name="bookingId" th:value="${booking.getIdBooking()}">
                 <input type="hidden" name="clientId" th:value="${client.getClientId()}">
 
