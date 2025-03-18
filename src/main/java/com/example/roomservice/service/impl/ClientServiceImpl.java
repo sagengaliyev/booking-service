@@ -7,8 +7,11 @@ import com.example.roomservice.mappers.ClientMapper;
 import com.example.roomservice.entity.Client;
 import com.example.roomservice.repository.ClientRepository;
 import com.example.roomservice.service.ClientService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 
 @Service
@@ -18,6 +21,7 @@ public class ClientServiceImpl implements ClientService {
     private final ClientRepository clientRepository;
     private final ClientMapper clientMapper;
 
+    @Transactional
     public ClientResponse create(ClientRequest request) {
         Client client = clientMapper.toEntity(request);
         clientRepository.save(client);
@@ -25,10 +29,10 @@ public class ClientServiceImpl implements ClientService {
         return clientMapper.toDto(client);
     }
 
-    public ClientResponse findById(Long id) {
-        return clientRepository.findById(id)
+    public Optional<ClientResponse> findById(Long id) {
+        return Optional.ofNullable(clientRepository.findById(id)
                 .map(clientMapper::toDto)
-                .orElseThrow(() -> new ResourceNotFoundException("Client with id " + id + " not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Client with id " + id + " not found")));
     }
 
 }

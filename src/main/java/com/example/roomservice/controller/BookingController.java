@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/bookings")
@@ -36,8 +38,8 @@ public class BookingController {
                                           @RequestParam(name = "bookingId") Long bookingId,
                                           @RequestParam(name = "clientId") Long clientId) {
 
-        BookingResponse booking = bookingService.findById(bookingId);
-        ClientResponse client = clientService.findById(clientId);
+        Optional<BookingResponse> booking = bookingService.findById(bookingId);
+        Optional<ClientResponse> client = clientService.findById(clientId);
 
         model.addAttribute("booking", booking);
         model.addAttribute("client", client);

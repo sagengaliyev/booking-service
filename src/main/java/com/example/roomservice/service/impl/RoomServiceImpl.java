@@ -9,6 +9,7 @@ import com.example.roomservice.entity.Room;
 import com.example.roomservice.repository.HotelRepository;
 import com.example.roomservice.repository.RoomRepository;
 import com.example.roomservice.service.RoomService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class RoomServiceImpl implements RoomService {
     private final HotelRepository hotelRepository;
     private final RoomMapper roomMapper;
 
-
+    @Transactional
     public SoapRoomResponse create(SoapRoomRequest roomDtoRequest) {
         Long hotelId = roomDtoRequest.getHotel().getId();
         Hotel hotel = hotelRepository.findById(hotelId)
@@ -40,8 +41,8 @@ public class RoomServiceImpl implements RoomService {
                 .map(roomMapper::toDto);
     }
 
+    @Transactional
     public void updatePriceRoom(Double price, Long roomId){
-
         Room room = roomRepository.findById(roomId)
                 .orElseThrow(() -> new ResourceNotFoundException("Room with id " + roomId + " not found"));
         room.setPrice(price);

@@ -4,6 +4,7 @@ import com.example.roomservice.dto.request.BookingRequest;
 import com.example.roomservice.dto.response.BookingResponse;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BookingService {
 
@@ -11,7 +12,7 @@ public interface BookingService {
 
     BookingResponse create(BookingRequest request);
 
-    BookingResponse findById(Long id);
+    Optional<BookingResponse> findById(Long id);
 
     void update(Long bookingId, Long clientId);
 

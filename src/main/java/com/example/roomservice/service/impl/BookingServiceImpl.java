@@ -11,6 +11,7 @@ import com.example.roomservice.repository.BookingRepository;
 import com.example.roomservice.repository.ClientRepository;
 import com.example.roomservice.repository.RoomRepository;
 import com.example.roomservice.service.BookingService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +44,7 @@ public class BookingServiceImpl implements BookingService {
                 .toList();
     }
 
+    @Transactional
     public BookingResponse create(BookingRequest request) {
 
         Long roomId = request.getRoom().getRoomId();
@@ -59,13 +61,13 @@ public class BookingServiceImpl implements BookingService {
         return bookingMapper.toShortDto(booking);
     }
 
-    public BookingResponse findById(Long id) {
-        return bookingRepository.findById(id)
+    public Optional<BookingResponse> findById(Long id) {
+        return Optional.ofNullable(bookingRepository.findById(id)
                 .map(bookingMapper::toShortDto)
-                .orElseThrow(() -> new ResourceNotFoundException("Booking with id " + id + " not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Booking with id " + id + " not found")));
     }
 
-
+    @Transactional
     public void update(Long bookingId, Long clientId){
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new ResourceNotFoundException("Booking with id " + bookingId + " not found"));
