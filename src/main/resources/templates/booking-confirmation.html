@@ -16,21 +16,21 @@
 
         <div class="card shadow-lg p-4">
             <h4 class="mb-3">Данные клиента</h4>
-            <p><strong>Имя:</strong> <span th:text="${client.getName()}"></span></p>
-            <p><strong>Email:</strong> <span th:text="${client.getEmail()}"></span></p>
+            <p><strong>Имя:</strong> <span th:text="${client.get().getName()}"></span></p>
+            <p><strong>Email:</strong> <span th:text="${client.get().getEmail()}"></span></p>
 
             <hr>
 
             <h4 class="mb-3">Данные бронирования</h4>
-            <p><strong>Отель:</strong> <span th:text="${booking.getRoom().getHotel().getName()}"></span></p>
-            <p><strong>Тип комнаты:</strong> <span th:text="${booking.getRoom().getRoomType()}"></span></p>
-            <p><strong>Цена:</strong> <span th:text="${booking.getRoom().getPrice()}"></span></p>
-            <p><strong>Дата заезда:</strong> <span th:text="${booking.getCheckInDate()}"></span></p>
-            <p><strong>Дата отъезда:</strong> <span th:text="${booking.getCheckOutDate()}"></span></p>
+            <p><strong>Отель:</strong> <span th:text="${booking.get().getRoom().getHotel().getName()}"></span></p>
+            <p><strong>Тип комнаты:</strong> <span th:text="${booking.get().getRoom().getRoomType()}"></span></p>
+            <p><strong>Цена:</strong> <span th:text="${booking.get().getRoom().getPrice()}"></span></p>
+            <p><strong>Дата заезда:</strong> <span th:text="${booking.get().getCheckInDate()}"></span></p>
+            <p><strong>Дата отъезда:</strong> <span th:text="${booking.get().getCheckOutDate()}"></span></p>
 
             <form action="/bookings/confirm" th:method="put">
-                <input type="hidden" name="bookingId" th:value="${booking.getIdBooking()}">
-                <input type="hidden" name="clientId" th:value="${client.getClientId()}">
+                <input type="hidden" name="bookingId" th:value="${booking.get().getIdBooking()}">
+                <input type="hidden" name="clientId" th:value="${client.get().getClientId()}">
 
                 <div class="text-center mt-4">
                     <button type="submit" class="btn btn-success px-4">Подтвердить бронирование</button>

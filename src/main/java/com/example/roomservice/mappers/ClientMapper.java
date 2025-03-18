@@ -18,7 +18,7 @@ public class ClientMapper {
         return clientDto;
     }
 
-    public Client toClient(ClientRequest clientDtoRequest){
+    public Client toEntity(ClientRequest clientDtoRequest){
         Client client = new Client();
 
         client.setName(clientDtoRequest.getName());

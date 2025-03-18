@@ -35,12 +35,12 @@ public class HotelMapper {
     }
 
 
-    public Hotel toHotel(SoapHotelRequest dto){
+    public Hotel toEntity(SoapHotelRequest dto){
         Hotel hotel = new Hotel();
 
         hotel.setName(dto.getName());
         hotel.setRooms(dto.getRooms().stream()
-                .map(soapRoomRequest -> roomMapper.toRoom(soapRoomRequest, hotel))
+                .map(soapRoomRequest -> roomMapper.toEntity(soapRoomRequest, hotel))
                 .toList()
         );
 

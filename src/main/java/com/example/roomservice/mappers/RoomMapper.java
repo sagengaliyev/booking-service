@@ -23,7 +23,7 @@ public class RoomMapper {
         );
     }
 
-    public Room toRoom(SoapRoomRequest request, Hotel hotel){
+    public Room toEntity(SoapRoomRequest request, Hotel hotel){
         Room room = new Room();
 
         room.setHotel(hotel);
