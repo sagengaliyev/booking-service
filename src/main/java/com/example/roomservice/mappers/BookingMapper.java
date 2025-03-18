@@ -24,7 +24,7 @@ public class BookingMapper {
         );
     }
 
-    public Booking toBooking(BookingRequest request, Room room){
+    public Booking toEntity(BookingRequest request, Room room){
         Booking booking = new Booking();
 
         booking.setRoom(room);

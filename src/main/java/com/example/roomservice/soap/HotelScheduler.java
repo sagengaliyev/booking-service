@@ -26,7 +26,6 @@ public class HotelScheduler {
     private final HotelService hotelService;
     private final RoomService roomService;
 
-
     public HotelScheduler(HotelClient hotelClient, HotelService hotelService, RoomService roomService) {
         this.hotelClient = hotelClient;
         this.hotelService = hotelService;
