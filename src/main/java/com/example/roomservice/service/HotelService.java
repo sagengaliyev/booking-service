@@ -16,7 +16,5 @@ public interface HotelService {
 
     List<SoapRoomResponse> getAllRooms(Long hotelId);
 
-    Integer getCountBookedRooms(Long hotelId, String roomType);
-
     Optional<Hotel> findById(Long hotelId);
 }

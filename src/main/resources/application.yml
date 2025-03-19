@@ -4,6 +4,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+    show-sql: true
   liquibase:
     change-log: classpath:/db/changelog/create-tables-changelog.sql
   datasource:
@@ -18,4 +19,5 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
+
 
