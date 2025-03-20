@@ -53,16 +53,6 @@ public class HotelServiceImpl implements HotelService {
         return response.getRooms();
     }
 
-    public Integer getCountBookedRooms(Long hotelId, String roomType){
-        Hotel hotel = hotelRepository.findById(hotelId)
-                .orElseThrow(() -> new ResourceNotFoundException("Hotel with id " + hotelId + " not found"));
-
-        return hotel.getRooms().stream()
-                .filter(room -> room.getIsBooked() && room.getType().equalsIgnoreCase(roomType))
-                .toList().size();
-    }
-
-
     public Optional<Hotel> findById(Long hotelId){
         return hotelRepository.findById(hotelId);
     }

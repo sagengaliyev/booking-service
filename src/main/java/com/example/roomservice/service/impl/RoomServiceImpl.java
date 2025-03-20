@@ -49,5 +49,12 @@ public class RoomServiceImpl implements RoomService {
         roomRepository.save(room);
     }
 
+    public Integer countBookedRooms(Long hotelId, String type){
+        Hotel hotel = hotelRepository.findById(hotelId)
+                .orElseThrow(() -> new ResourceNotFoundException("Hotel with id " + hotelId + " not found"));
+
+        return roomRepository.findRoomsByHotelAndIsBookedAndType(hotel, true, type).size();
+    }
+
 
 }

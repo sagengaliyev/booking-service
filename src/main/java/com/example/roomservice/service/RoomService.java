@@ -12,4 +12,6 @@ public interface RoomService {
     Optional<SoapRoomResponse> findById(Long id);
 
     void updatePriceRoom(Double price, Long roomId);
+
+    Integer countBookedRooms(Long hotelId, String type);
 }
